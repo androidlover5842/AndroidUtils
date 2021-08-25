@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AndroidEditText">
+        <attr name="android:hint" format="string" />
+        <attr name="android:text" format="string" />
+        <attr name="android:maxLength" format="integer" />
+        <attr name="android:maxLines" format="integer" />
+        <attr name="android:inputType" />
+        <attr name="android:enabled" format="boolean" />
+        <attr name="android:focusable" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="ProgressButton">
+        <attr name="android:text" />
+        <attr name="android:textColor"/>
+        <attr name="start" format="boolean"/>
+        <attr name="loadingText" format="string"/>
+        <attr name="android:backgroundTint"/>
+        <attr name="android:background" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="AndroidRecyclerView">
+        <attr name="android:text"/>
+        <attr name="android:layout_height"/>
+        <attr name="android:layout_width"/>
+        <attr name="loading" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="BookMarkView">
+        <attr name="enabled" format="boolean"/>
+        <attr name="enabledTint" format="color"/>
+        <attr name="disabledTint" format="color"/>
+    </declare-styleable>
+</resources>

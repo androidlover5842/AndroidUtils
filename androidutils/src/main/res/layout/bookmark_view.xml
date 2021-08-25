@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.appcompat.widget.AppCompatImageView android:layout_height="60dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_bookmark"
+        android:layout_width="60dp"/>
+</merge>
