@@ -13,6 +13,7 @@ public abstract class Runner implements Runnable{
     private HashMap<String,Object> pass;
     public abstract void exec() throws Exception;
     private resultListener result;
+    private boolean debug;
 
     @Override
     public void run() {
@@ -20,7 +21,7 @@ public abstract class Runner implements Runnable{
         try {
             exec();
         }catch (Exception e){
-            if (BuildConfig.DEBUG)
+            if (debug)
                 e.printStackTrace();
         }
         if (result!=null){
@@ -29,6 +30,11 @@ public abstract class Runner implements Runnable{
             },200);
         }
         status=RunnerStatus.ENDED;
+    }
+
+    public Runner setDebug(boolean debug) {
+        this.debug = debug;
+        return this;
     }
 
     public Runner setResultListener(resultListener listener){
