@@ -11,8 +11,11 @@ import android.view.ViewGroup;
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.androidlover5842.androidUtils.BR;
 import com.androidlover5842.androidUtils.Holder.BaseViewHolder;
 
 import java.util.List;
@@ -77,7 +80,8 @@ public abstract class RecyclerBuilder<T> extends RecyclerView.Adapter<BaseViewHo
         {
             context = parent.getContext();
         }
-        View view= LayoutInflater.from(context).inflate(getLayoutId(),parent,false);
+
+        ViewDataBinding view= DataBindingUtil.inflate(LayoutInflater.from(context),getLayoutId(),parent,false);;
         return new BaseViewHolder(view);
     }
 
@@ -96,6 +100,7 @@ public abstract class RecyclerBuilder<T> extends RecyclerView.Adapter<BaseViewHo
     {
         return (T)view.findViewById(id);
     }
+
     public boolean isLast(){
         if (getList().size()==counter)
         {
@@ -107,9 +112,9 @@ public abstract class RecyclerBuilder<T> extends RecyclerView.Adapter<BaseViewHo
     @Override
     public int getItemCount() {
         if (list!=null)
-        if (MAX_ITEM==0 || MAX_ITEM >=list.size())
-            return list.size();
-        else return MAX_ITEM;
+            if (MAX_ITEM==0 || MAX_ITEM >=list.size())
+                return list.size();
+            else return MAX_ITEM;
         else return 0;
     }
     public abstract @LayoutRes
