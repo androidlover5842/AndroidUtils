@@ -12,7 +12,7 @@ android {
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -31,5 +31,5 @@ dependencies {
     implementation project(path: ':androidutils')
     implementation 'androidx.appcompat:appcompat:1.6.0-alpha01'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-
+    implementation 'androidx.multidex:multidex:2.0.1'
 }
