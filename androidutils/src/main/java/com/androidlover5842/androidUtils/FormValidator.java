@@ -1,4 +1,4 @@
-package com.androidlover5842.AndroidUtils;
+package com.androidlover5842.androidUtils;
 
 public class FormValidator {
 

@@ -1,9 +1,7 @@
-package com.androidlover5842.AndroidUtils.Task;
+package com.androidlover5842.androidUtils.Task;
 
 import android.os.Handler;
 import android.os.Looper;
-
-import com.androidlover5842.AndroidUtils.BuildConfig;
 
 import java.util.HashMap;
 import java.util.Map;

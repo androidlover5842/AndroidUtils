@@ -1,4 +1,4 @@
-package com.androidlover5842.AndroidUtils;
+package com.androidlover5842.androidUtils;
 
 import android.text.Editable;
 import android.text.TextWatcher;

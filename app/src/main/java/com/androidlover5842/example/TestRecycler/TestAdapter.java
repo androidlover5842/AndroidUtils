@@ -2,8 +2,8 @@ package com.androidlover5842.example.TestRecycler;
 
 import android.view.View;
 
-import com.androidlover5842.AndroidUtils.Adapter.RecyclerBuilder;
-import com.androidlover5842.AndroidUtils.Holder.BaseViewHolder;
+import com.androidlover5842.androidUtils.adapter.RecyclerBuilder;
+import com.androidlover5842.androidUtils.Holder.BaseViewHolder;
 import com.androidlover5842.example.R;
 
 public class TestAdapter extends RecyclerBuilder<TestModel> {

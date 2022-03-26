@@ -1,4 +1,4 @@
-package com.androidlover5842.AndroidUtils.SharePref;
+package com.androidlover5842.androidUtils.SharePref;
 
 import android.content.Context;
 import android.content.SharedPreferences;

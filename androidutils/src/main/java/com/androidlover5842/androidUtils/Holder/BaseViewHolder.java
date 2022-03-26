@@ -1,4 +1,4 @@
-package com.androidlover5842.AndroidUtils.Holder;
+package com.androidlover5842.androidUtils.Holder;
 
 import android.view.View;
 

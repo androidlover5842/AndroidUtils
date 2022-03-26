@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.androidlover5842.AndroidUtils.MeterView;
+import com.androidlover5842.androidUtils.MeterView;
 import com.androidlover5842.example.TestRecycler.TestAdapter;
 
 import java.util.Timer;

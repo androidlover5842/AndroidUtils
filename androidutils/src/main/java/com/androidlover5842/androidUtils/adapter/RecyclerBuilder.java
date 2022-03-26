@@ -1,4 +1,4 @@
-package com.androidlover5842.AndroidUtils.Adapter;
+package com.androidlover5842.androidUtils.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,7 +13,7 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.androidlover5842.AndroidUtils.Holder.BaseViewHolder;
+import com.androidlover5842.androidUtils.Holder.BaseViewHolder;
 
 import java.util.List;
 

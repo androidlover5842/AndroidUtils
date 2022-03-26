@@ -1,4 +1,4 @@
-package com.androidlover5842.AndroidUtils;
+package com.androidlover5842.androidUtils;
 
 import android.content.Context;
 import android.content.res.TypedArray;

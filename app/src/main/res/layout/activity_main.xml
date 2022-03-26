@@ -7,12 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.androidlover5842.AndroidUtils.MeterView
+    <com.androidlover5842.androidUtils.MeterView
         android:layout_width="match_parent"
         android:id="@+id/meter"
         android:layout_height="wrap_content"/>
 
-    <com.androidlover5842.AndroidUtils.ProgressButton
+    <com.androidlover5842.androidUtils.ProgressButton
         android:layout_width="match_parent"
         android:text="hi"
         android:background="@color/dark_green"
