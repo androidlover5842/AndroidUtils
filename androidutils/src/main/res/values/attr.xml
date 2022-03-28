@@ -10,12 +10,8 @@
         <attr name="android:focusable" format="boolean"/>
     </declare-styleable>
     <declare-styleable name="ProgressButton">
-        <attr name="android:text" />
-        <attr name="android:textColor"/>
-        <attr name="start" format="boolean"/>
-        <attr name="loadingText" format="string"/>
-        <attr name="android:backgroundTint"/>
-        <attr name="android:background" format="boolean"/>
+        <attr name="loadingColor" format="color"/>
+        <attr name="loading"/>
     </declare-styleable>
 
     <declare-styleable name="AndroidRecyclerView">

@@ -1,26 +1,30 @@
 package com.androidlover5842.example;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.fragment.app.FragmentActivity;
 
 import com.androidlover5842.androidUtils.MeterView;
+import com.androidlover5842.androidUtils.ProgressButton;
 import com.androidlover5842.example.TestRecycler.TestAdapter;
 
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements View.OnClickListener {
 
     private MeterView meterView;
     private TestAdapter adapter;
+    private ProgressButton progressButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         meterView=findViewById(R.id.meter);
-
+        progressButton=findViewById(R.id.btProgress);
+        progressButton.setOnClickListener(this);
         setupMeter();
     }
 
@@ -32,10 +36,11 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void run() {
                 runOnUiThread(()->{
-                    System.out.println("Ypdating ...."+i.get());
                     i.getAndIncrement();
-                    if (i.get()==5)
+                    if (i.get()==5) {
                         i.set(0);
+                        progressButton.loading(false);
+                    }
 
                     meterView.setPosition(i.get());
                     meterView.setText(text(i.get()));
@@ -66,5 +71,13 @@ public class MainActivity extends FragmentActivity {
                 break;
         }
         return text;
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id=v.getId();
+        if (id==v.getId()){
+            progressButton.loading(true);
+        }
     }
 }

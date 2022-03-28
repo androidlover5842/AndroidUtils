@@ -13,8 +13,9 @@
         android:layout_height="wrap_content"/>
 
     <com.androidlover5842.androidUtils.ProgressButton
+        android:id="@+id/btProgress"
         android:layout_width="match_parent"
         android:text="hi"
         android:background="@color/dark_green"
-        android:layout_height="40dp"/>
+        android:layout_height="wrap_content"/>
 </LinearLayout>
