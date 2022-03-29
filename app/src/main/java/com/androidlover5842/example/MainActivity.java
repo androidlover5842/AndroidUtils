@@ -31,7 +31,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private void setupMeter(){
         Timer timer=new Timer();
-        AtomicInteger i= new AtomicInteger(1);
+        AtomicInteger i= new AtomicInteger(0);
         TimerTask timerTask=new TimerTask() {
             @Override
             public void run() {
