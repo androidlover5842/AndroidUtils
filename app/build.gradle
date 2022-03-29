@@ -33,6 +33,7 @@ android {
 dependencies {
     implementation project(path: ':androidutils')
     implementation 'androidx.appcompat:appcompat:1.6.0-alpha01'
+    implementation "com.google.android.material:material:$materialVersion"
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.multidex:multidex:2.0.1'
 }
