@@ -29,7 +29,7 @@ public class MeterView  extends View {
 
     private String text;
     public MeterView(Context context) {
-        super(context,null);
+        super(context);
         init();
     }
 
@@ -42,14 +42,15 @@ public class MeterView  extends View {
     public MeterView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.attrs=attrs;
-
+        init();
     }
 
     private void init(){
         TypedArray a = getContext().obtainStyledAttributes(attrs,
-                R.styleable.ProgressButton, 0, 0);
-        text= (String) a.getText(R.styleable.MeterView_android_text);
+                R.styleable.MeterView, 0, 0);
+        text= a.getString(R.styleable.MeterView_android_text);
         position=a.getInteger(R.styleable.MeterView_defaultNeedlePosition,0);
+        System.out.println(text);
         a.recycle();
     }
 
