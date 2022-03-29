@@ -8,9 +8,10 @@
     tools:context=".MainActivity">
 
     <com.androidlover5842.androidUtils.MeterView
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:id="@+id/meter"
-        android:layout_height="wrap_content"/>
+        android:layout_gravity="center"
+        android:layout_height="200dp"/>
 
     <com.androidlover5842.androidUtils.ProgressButton
         android:id="@+id/btProgress"
