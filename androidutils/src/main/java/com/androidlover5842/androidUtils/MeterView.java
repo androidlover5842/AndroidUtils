@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.graphics.Typeface;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -50,13 +49,13 @@ public class MeterView  extends View {
                 R.styleable.MeterView, 0, 0);
         text= a.getString(R.styleable.MeterView_android_text);
         position=a.getInteger(R.styleable.MeterView_defaultNeedlePosition,0);
-        System.out.println(text);
         a.recycle();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
         createPi(canvas);
         createNeedle(canvas);
         if (text!=null)
@@ -87,10 +86,9 @@ public class MeterView  extends View {
         invalidate();
     }
 
-    String pathData="m256,338.444c-25.989,0 -47.133,-21.144 -47.133,-47.133 0,-32.832 29.165,-165.022 32.491,-179.987 1.525,-6.863 7.612,-11.746 14.643,-11.746s13.118,4.883 14.643,11.746c3.326,14.965 32.491,147.155 32.491,179.987 -0.002,25.989 -21.146,47.133 -47.135,47.133z";
-    String pathData2="m256,338.444v-238.867c7.03,0 13.118,4.883 14.643,11.746 3.326,14.965 32.491,147.155 32.491,179.987 -0.001,25.99 -21.145,47.134 -47.134,47.134z";
     private void createPi(Canvas canvas){
-        float mRadius = (float) (height/2f);
+
+        float mRadius = (float) (width/2f)-dip2px(10);
 
         rectF.set(width/2f-mRadius,
                 height/2f-mRadius,
@@ -108,8 +106,9 @@ public class MeterView  extends View {
 
         }
 
+
         paint.setColor(Color.WHITE);
-        mRadius = (float) (height/3f);
+        mRadius = (float) (width/3f)-dip2px(5);
         canvas.drawCircle(width/2f,height/2f,mRadius,paint);
         canvas.save();
     }
@@ -117,10 +116,11 @@ public class MeterView  extends View {
     private void createNeedle(Canvas canvas){
         canvas.rotate(needleOrient[position],width/2,height/2);
         paint.setStrokeWidth(dip2px(4));
-        paint.setColor(Color.BLACK);
+        paint.setColor(Color.parseColor(colors[position]));
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setAntiAlias(true);
-        canvas.drawOval(width/2,height/2,getWidth()/2+getWidth()/4,getHeight()/2,paint);
+        canvas.drawLine(width/2,height/2,getWidth()/2+getWidth()/4,getHeight()/2,paint);
+        canvas.drawCircle(width/2,height/2,10,paint);
         canvas.restore();
         canvas.save();
     }
