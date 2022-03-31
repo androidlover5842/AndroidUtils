@@ -33,12 +33,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     private Runnable loading;
+    private Handler handler;
     private void setupRecycler(){
-        Handler handler=new Handler();
+        handler=new Handler();
 
         loading=()->{
-            System.out.println(binding.recycler.isLoading());
             binding.recycler.setLoading(!binding.recycler.isLoading());
+            if (handler!=null)
             handler.postDelayed(loading,1000);
         };
         handler.postDelayed(loading,1000);
@@ -49,5 +50,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         if (id==v.getId()){
             binding.btProgress.loading(true);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler=null;
     }
 }
