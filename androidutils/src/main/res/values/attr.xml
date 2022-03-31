@@ -20,8 +20,8 @@
     </declare-styleable>
     <declare-styleable name="AndroidRecyclerView">
         <attr name="android:text"/>
-        <attr name="android:layout_height"/>
-        <attr name="android:layout_width"/>
+        <attr name="android:textColor"/>
+        <attr name="android:progressTint"/>
         <attr name="loading" format="boolean"/>
     </declare-styleable>
     <declare-styleable name="BookMarkView">

@@ -2,113 +2,150 @@ package com.androidlover5842.androidUtils;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class AndroidRecyclerView extends RelativeLayout {
-    private ViewGroup mContentView;
-    private TextView textView;
-    private ProgressBar progressBar;
-    private RecyclerView recyclerView;
-    private String text;
-    private RecyclerView.Adapter adapter;
+import com.androidlover5842.androidUtils.Utils.Utils;
+
+public class AndroidRecyclerView extends RecyclerView {
+
     private boolean loading;
-    private int height;
-    private int width;
-    public AndroidRecyclerView(Context context, @Nullable AttributeSet attrs) {
+    private String text;
+    private int progressColor,textColor;
+
+    private RectF rectF=new RectF();
+    private Paint paint=new Paint();
+    private TextPaint textPaint=new TextPaint();
+    private int progressArcRadius=dip2px(15);
+    private RotateAnimation rotateProgress;
+    private int height,width;
+
+    public AndroidRecyclerView(@NonNull Context context) {
+        super(context);
+        init(null);
+    }
+
+    public AndroidRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        View v=LayoutInflater
-                .from(context)
-                .inflate(R.layout.empty_recycler,this);
-        mContentView=v.findViewById(R.id.content);
-        recyclerView= (RecyclerView) mContentView.getChildAt(0);
-        progressBar= (ProgressBar) mContentView.getChildAt(1);
-        textView= (TextView) mContentView.getChildAt(2);
-        TypedArray a = context.obtainStyledAttributes(attrs,
+        init(attrs);
+    }
+
+    public AndroidRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(attrs);
+    }
+
+    private void init(AttributeSet attributeSet){
+        if (getLayoutManager()==null)
+            setLayoutManager(Utils.linear(VERTICAL));
+
+        TypedArray a = getContext().obtainStyledAttributes(attributeSet,
                 R.styleable.AndroidRecyclerView, 0, 0);
-
-        text=a.getString(R.styleable.AndroidRecyclerView_android_text);
         loading=a.getBoolean(R.styleable.AndroidRecyclerView_loading,false);
-        height=a.getLayoutDimension(R.styleable.AndroidRecyclerView_android_layout_height,ViewGroup.LayoutParams.WRAP_CONTENT);
-        width=a.getLayoutDimension(R.styleable.AndroidRecyclerView_android_layout_width, ViewGroup.LayoutParams.WRAP_CONTENT);
-        if (text!=null)
-            textView.setText(text);
-        RelativeLayout.LayoutParams params= new RelativeLayout.LayoutParams(width,height);
+        text=a.getString(R.styleable.AndroidRecyclerView_android_text);
+        progressColor=a.getColor(R.styleable.AndroidRecyclerView_android_progressTint,Color.BLACK);
+        textColor=a.getColor(R.styleable.AndroidRecyclerView_android_textColor,Color.BLACK);
 
-        mContentView.setLayoutParams(params);
-        recyclerView.setLayoutParams(params);
-        setLoading(loading);
+        rotateProgress = new RotateAnimation(0f,
+                360f, Animation.RELATIVE_TO_SELF,
+                0.5f, Animation.RELATIVE_TO_SELF,
+                0.5f);
+
+        rotateProgress.setInterpolator(new LinearInterpolator());
+        rotateProgress.setDuration(400);
+        rotateProgress.setRepeatCount(Animation.INFINITE);
+        setupPaint();
+        loading(loading);
 
         a.recycle();
     }
 
     @Override
-    public void addView(View child, int index, ViewGroup.LayoutParams params) {
-        if(mContentView == null){
-            super.addView(child, index, params);
-        } else {
-            mContentView.addView(child, index, params);
-        }
+    protected void onMeasure(int widthSpec, int heightSpec) {
+        int[] spec=getViewSize(widthSpec,heightSpec);
+        super.onMeasure(spec[0],spec[1]);
     }
 
-    public void setAdapter(RecyclerView.Adapter adapter){
-        this.adapter=adapter;
-        if (adapter!=null){
-            adapter.registerAdapterDataObserver(observer);
-            recyclerView.setAdapter(adapter);
-        }
-    }
+    @Override
+    public void onDraw(Canvas c) {
+        if (!loading) {
+            boolean empty=getAdapter()!=null?getAdapter().getItemCount()==0:false;
 
-    public void setLayoutManager(RecyclerView.LayoutManager layoutManager){
-        recyclerView.setLayoutManager(layoutManager);
-    }
-    public void setText(String text){
-        this.text=text;
-        if (this.text!=null)
-            textView.setText(text);
-    }
-
-    public void setLoading(boolean loading) {
-        this.loading = loading;
-
-        if (adapter!=null) {
-            if (loading)
-                textView.setVisibility(GONE);
-            else {
-                textView.setVisibility(adapter.getItemCount() != 0?GONE:VISIBLE);
+            if (!empty && text!=null){
+                int xPos = (width/ 2);
+                int yPos = (int) ((height / 2) - ((textPaint.descent() + textPaint.ascent()) / 2)) ;
+                c.drawText(text,xPos, yPos,textPaint);
+            }else {
+                super.onDraw(c);
             }
         }
+        else{
+            rectF.set((width/2)-progressArcRadius,
+                    (height/2)-progressArcRadius,
+                    (width/2)+progressArcRadius,
+                    (height/2)+progressArcRadius);
 
-        recyclerView.setVisibility(loading?GONE:VISIBLE);
-        progressBar.setVisibility(loading?VISIBLE:GONE);
+            c.drawArc(rectF,90,90,false,paint);
+        }
+
     }
 
-    final RecyclerView.AdapterDataObserver observer = new RecyclerView.AdapterDataObserver() {
-        @Override
-        public void onChanged() {
-            super.onChanged();
-            setLoading(loading);
-        }
+    public void setText(String text) {
+        this.text = text;
+    }
 
-        @Override
-        public void onItemRangeInserted(int positionStart, int itemCount) {
-            super.onItemRangeInserted(positionStart, itemCount);
-            setLoading(loading);
+    private void setupPaint(){
+        paint.setColor(progressColor);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeCap(Paint.Cap.ROUND);
+        paint.setStrokeWidth(dip2px(5));
+        textPaint.setAntiAlias(true);
+        textPaint.setTextSize(dip2px(13));
+        textPaint.setTextAlign(Paint.Align.CENTER);
+        textPaint.setColor(textColor);
+    }
+    public void loading(boolean loading) {
+        this.loading = loading;
+        if (loading){
+            startAnimation(rotateProgress);
         }
+        else
+        {
+            rotateProgress.cancel();
+        }
+        invalidate();
+    }
 
-        @Override
-        public void onItemRangeRemoved(int positionStart, int itemCount) {
-            super.onItemRangeRemoved(positionStart, itemCount);
-            setLoading(loading);
-        }
-    };
+    public int dip2px(float dpValue) {
+        final float scale = getContext().getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
+    private int[] getViewSize(int widthMeasureSpec,int heightMeasureSpec){
+        int heightModeSpec=MeasureSpec.getMode(heightMeasureSpec);
+        int widthModeSpec=MeasureSpec.getMode(widthMeasureSpec);
+        int defaultHeight=400;
+        int defaultWidth=400;
+        if (heightModeSpec==MeasureSpec.AT_MOST)
+            heightMeasureSpec=MeasureSpec.makeMeasureSpec(defaultHeight,MeasureSpec.EXACTLY);
+        if(widthModeSpec==MeasureSpec.AT_MOST)
+            widthMeasureSpec=MeasureSpec.makeMeasureSpec(defaultWidth,MeasureSpec.EXACTLY);
+        this.width=MeasureSpec.getSize(widthMeasureSpec);
+        this.height=MeasureSpec.getSize(heightMeasureSpec);
+        return new int[]{widthMeasureSpec,heightMeasureSpec};
+    }
 
 }
