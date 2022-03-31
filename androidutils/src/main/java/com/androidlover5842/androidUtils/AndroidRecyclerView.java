@@ -74,27 +74,24 @@ public class AndroidRecyclerView extends RecyclerView {
         setupPaint();
         setLoading(loading);
 
-        System.out.println(getContext());
         a.recycle();
     }
 
     @Override
-    public void setAdapter(@Nullable Adapter adapter) {
+    public void setAdapter(@Nullable Adapter newAdapter) {
+        if (newAdapter!=null){
+            if (!newAdapter.getClass().equals(baseAdapter.getClass()))
+                this.adapter=newAdapter;
 
-
-        if (adapter!=null){
-            if (!adapter.getClass().equals(baseAdapter.getClass()))
-                this.adapter=adapter;
-
-            if (!adapter.hasObservers())
-                adapter.registerAdapterDataObserver(observer);
-            if (adapter.getItemCount()>0 && loading)
+            if (!newAdapter.hasObservers())
+                newAdapter.registerAdapterDataObserver(observer);
+            if (newAdapter.getItemCount()>0 && loading)
                 adapter=baseAdapter;
             else
-                adapter = this.adapter;
+                newAdapter = adapter;
 
         }
-        super.setAdapter(adapter);
+        super.setAdapter(newAdapter);
     }
 
     @Override
