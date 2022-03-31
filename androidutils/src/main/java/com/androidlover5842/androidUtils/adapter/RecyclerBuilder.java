@@ -86,6 +86,11 @@ public abstract class RecyclerBuilder<T> extends RecyclerView.Adapter<BaseViewHo
 
     public abstract void onBindViewHolder(BaseViewHolder holder, int position, T model,View v);
 
+    @Override
+    public void onClick(int position, T model, View v) {
+
+    }
+
     public boolean isLast(){
         if (getList().size()==counter)
         {
