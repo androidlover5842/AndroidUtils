@@ -13,7 +13,7 @@ import com.androidlover5842.example.R;
 public class TestAdapter extends RecyclerBuilder<TestModel> {
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position, TestModel model, View v) {
-        DataBindingUtil.bind(v).setVariable(BR.model,model);
+        dataBind(BR.model,model);
     }
 
     @Override

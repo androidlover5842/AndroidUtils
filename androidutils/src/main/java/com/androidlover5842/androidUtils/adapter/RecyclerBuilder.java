@@ -64,13 +64,13 @@ public abstract class RecyclerBuilder<T> extends RecyclerView.Adapter<BaseViewHo
     public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
         counter++;
         view=holder.getView();
+        T model=getItem(position);
         view.setOnClickListener(v -> {
-            T model=getItem(position);
             onClick(position,model, view);
             if (clickListener!=null)
                 clickListener.onClick(position,model);
         });
-        onBindViewHolder(holder,position,getItem(position),view);
+        onBindViewHolder(holder,position,model,view);
     }
 
     @NonNull
@@ -94,6 +94,10 @@ public abstract class RecyclerBuilder<T> extends RecyclerView.Adapter<BaseViewHo
 
     public void onClick(int position, T model,View view){
 
+    }
+
+    public void dataBind(int variable,T model){
+        DataBindingUtil.bind(view).setVariable(variable,model);
     }
 
     public  <T> T findViewById(@IdRes int id)
