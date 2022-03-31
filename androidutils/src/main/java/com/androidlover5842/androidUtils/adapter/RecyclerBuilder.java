@@ -20,14 +20,12 @@ import com.androidlover5842.androidUtils.Holder.BaseViewHolder;
 
 import java.util.List;
 
-public abstract class RecyclerBuilder<T> extends RecyclerView.Adapter<BaseViewHolder> {
+public abstract class RecyclerBuilder<T> extends RecyclerView.Adapter<BaseViewHolder> implements OnItemClickListener<T> {
 
     private List<T> list;
     private int MAX_ITEM;
     private Context context;
     private int counter=0;
-    private View view;
-    private OnItemClickListener<T> clickListener;
     private Activity activity;
 
     public RecyclerBuilder() {
@@ -63,13 +61,9 @@ public abstract class RecyclerBuilder<T> extends RecyclerView.Adapter<BaseViewHo
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
         counter++;
-        view=holder.getView();
+        View view=holder.getView();
         T model=getItem(position);
-        view.setOnClickListener(v -> {
-            onClick(position,model, view);
-            if (clickListener!=null)
-                clickListener.onClick(position,model);
-        });
+        view.setOnClickListener(v -> onClick(position,model,view));
         onBindViewHolder(holder,position,model,view);
     }
 
@@ -92,19 +86,6 @@ public abstract class RecyclerBuilder<T> extends RecyclerView.Adapter<BaseViewHo
 
     public abstract void onBindViewHolder(BaseViewHolder holder, int position, T model,View v);
 
-    public void onClick(int position, T model,View view){
-
-    }
-
-    public void dataBind(int variable,T model){
-        DataBindingUtil.bind(view).setVariable(variable,model);
-    }
-
-    public  <T> T findViewById(@IdRes int id)
-    {
-        return (T)view.findViewById(id);
-    }
-
     public boolean isLast(){
         if (getList().size()==counter)
         {
@@ -124,10 +105,6 @@ public abstract class RecyclerBuilder<T> extends RecyclerView.Adapter<BaseViewHo
     public abstract @LayoutRes
     int getLayoutId();
 
-
-    public void setOnItemClickListener(OnItemClickListener<T> clickListener) {
-        this.clickListener = clickListener;
-    }
 
     public void start(Class cls)
     {

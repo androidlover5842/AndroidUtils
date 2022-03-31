@@ -75,7 +75,7 @@ public class MainViewModel extends ViewModel {
 
     private void setupTestList(){
         for (int i = 0; i < 100; i++) {
-            testModels.add(new TestModel("Android","World"));
+            testModels.add(new TestModel("Android","World",i));
         }
     }
 }

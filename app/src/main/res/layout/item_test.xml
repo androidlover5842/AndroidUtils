@@ -19,6 +19,10 @@
             android:layout_width="match_parent"
             android:text="@{model.lastName}"
             android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:text="@{String.valueOf(model.position)}"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 </layout>
