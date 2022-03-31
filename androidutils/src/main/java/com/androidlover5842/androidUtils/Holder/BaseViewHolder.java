@@ -25,6 +25,6 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     }
 
     public <T> void dataBind(int variable,T model){
-        DataBindingUtil.bind(view).setVariable(variable,model);
+        dataBinding.setVariable(variable,model);
     }
 }
