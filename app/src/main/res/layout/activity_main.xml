@@ -22,6 +22,7 @@
     <com.androidlover5842.androidUtils.AndroidRecyclerView
         android:layout_width="match_parent"
         android:text="Nothing to show"
+        android:id="@+id/recycler"
         android:textColor="@color/dark_green"
         android:layout_height="match_parent"/>
 </LinearLayout>

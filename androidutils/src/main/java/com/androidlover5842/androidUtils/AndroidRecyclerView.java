@@ -32,6 +32,8 @@ public class AndroidRecyclerView extends RecyclerView {
     private int progressArcRadius=dip2px(15);
     private RotateAnimation rotateProgress;
     private int height,width;
+    private Adapter adapter;
+    private BaseAdapter baseAdapter;
 
     public AndroidRecyclerView(@NonNull Context context) {
         super(context);
@@ -59,6 +61,8 @@ public class AndroidRecyclerView extends RecyclerView {
         progressColor=a.getColor(R.styleable.AndroidRecyclerView_android_progressTint,Color.BLACK);
         textColor=a.getColor(R.styleable.AndroidRecyclerView_android_textColor,Color.BLACK);
 
+        baseAdapter=new BaseAdapter();
+
         rotateProgress = new RotateAnimation(0f,
                 360f, Animation.RELATIVE_TO_SELF,
                 0.5f, Animation.RELATIVE_TO_SELF,
@@ -68,9 +72,28 @@ public class AndroidRecyclerView extends RecyclerView {
         rotateProgress.setDuration(400);
         rotateProgress.setRepeatCount(Animation.INFINITE);
         setupPaint();
-        loading(loading);
+        setLoading(loading);
 
         a.recycle();
+    }
+
+    @Override
+    public void setAdapter(@Nullable Adapter adapter) {
+
+
+        if (adapter!=null){
+            if (!adapter.getClass().equals("com.androidlover5842.androidUtils.BaseAdapter"))
+                this.adapter=adapter;
+
+            if (!adapter.hasObservers())
+                adapter.registerAdapterDataObserver(observer);
+            if (adapter.getItemCount()>0 && loading)
+                adapter=baseAdapter;
+            else
+                adapter = this.adapter;
+
+        }
+        super.setAdapter(adapter);
     }
 
     @Override
@@ -84,7 +107,7 @@ public class AndroidRecyclerView extends RecyclerView {
         if (!loading) {
             boolean empty=getAdapter()!=null?getAdapter().getItemCount()==0:false;
 
-            if (!empty && text!=null){
+            if (empty && text!=null){
                 int xPos = (width/ 2);
                 int yPos = (int) ((height / 2) - ((textPaint.descent() + textPaint.ascent()) / 2)) ;
                 c.drawText(text,xPos, yPos,textPaint);
@@ -117,13 +140,17 @@ public class AndroidRecyclerView extends RecyclerView {
         textPaint.setTextAlign(Paint.Align.CENTER);
         textPaint.setColor(textColor);
     }
-    public void loading(boolean loading) {
+
+    public void setLoading(boolean loading) {
         this.loading = loading;
+
         if (loading){
+            setAdapter(null);
             startAnimation(rotateProgress);
         }
         else
         {
+            setAdapter(adapter);
             rotateProgress.cancel();
         }
         invalidate();
@@ -147,5 +174,25 @@ public class AndroidRecyclerView extends RecyclerView {
         this.height=MeasureSpec.getSize(heightMeasureSpec);
         return new int[]{widthMeasureSpec,heightMeasureSpec};
     }
+
+    final RecyclerView.AdapterDataObserver observer = new RecyclerView.AdapterDataObserver() {
+        @Override
+        public void onChanged() {
+            super.onChanged();
+            setLoading(loading);
+        }
+
+        @Override
+        public void onItemRangeInserted(int positionStart, int itemCount) {
+            super.onItemRangeInserted(positionStart, itemCount);
+            setLoading(loading);
+        }
+
+        @Override
+        public void onItemRangeRemoved(int positionStart, int itemCount) {
+            super.onItemRangeRemoved(positionStart, itemCount);
+            setLoading(loading);
+        }
+    };
 
 }

@@ -28,6 +28,13 @@ android {
     packagingOptions {
         resources.excludes.add("META-INF/*")
     }
+    viewBinding{
+        enabled=true
+    }
+    dataBinding {
+        enabled = true
+    }
+
 }
 
 dependencies {
