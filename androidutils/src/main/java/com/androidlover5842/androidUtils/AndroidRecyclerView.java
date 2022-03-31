@@ -74,6 +74,7 @@ public class AndroidRecyclerView extends RecyclerView {
         setupPaint();
         setLoading(loading);
 
+        System.out.println(getContext());
         a.recycle();
     }
 
@@ -82,7 +83,7 @@ public class AndroidRecyclerView extends RecyclerView {
 
 
         if (adapter!=null){
-            if (!adapter.getClass().equals("com.androidlover5842.androidUtils.BaseAdapter"))
+            if (!adapter.getClass().equals(baseAdapter.getClass()))
                 this.adapter=adapter;
 
             if (!adapter.hasObservers())
