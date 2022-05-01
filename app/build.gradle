@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.androidlover5842.example"
         minSdkVersion 16
-        targetSdkVersion 31
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -25,9 +25,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
-    packagingOptions {
-        resources.excludes.add("META-INF/*")
-    }
     viewBinding{
         enabled=true
     }
@@ -39,7 +36,7 @@ android {
 
 dependencies {
     implementation project(path: ':androidutils')
-    implementation 'androidx.appcompat:appcompat:1.6.0-alpha01'
+    implementation 'androidx.appcompat:appcompat:1.6.0-alpha03'
     implementation "com.google.android.material:material:$materialVersion"
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.multidex:multidex:2.0.1'
