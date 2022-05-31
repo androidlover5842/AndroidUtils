@@ -9,6 +9,12 @@ public class Checker{
         this.empty=empty;
     }
 
+    public Checker doOnEmptyOrRuleFailed(OnEmptyOrFailed onEmptyOrFailed){
+        if (onEmptyOrFailed!=null)if (empty || !rule)
+            onEmptyOrFailed.onEmptyOrFailed();
+        return this;
+    }
+
     public Checker doOnEmpty(OnEmpty onEmpty){
         if (empty&& onEmpty!=null)
             onEmpty.empty();
@@ -26,6 +32,7 @@ public class Checker{
             rulePassed.onRulePassed();
         return this;
     }
+
     public Boolean toBool(){
         return !empty && rule;
     }
